@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sip_scroll_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:elevation="100dp"
+    android:background="@color/colorSurface"
+    tools:context=".fragments.SipCalculatorFrag">
+
+    <LinearLayout
+        android:id="@+id/form_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Monthly Investment Amount -->
+        <TextView
+            android:textColor="@color/colorTextPrimary"
+            android:text="Monthly Investment Amount (₹)"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/investment_amount_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="Enter amount" />
+
+        <!-- Years Slider -->
+        <TextView
+            android:textColor="@color/colorTextPrimary"
+
+            android:id="@+id/years_text"
+            android:layout_marginTop="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Investment Duration: 15 years" />
+
+        <SeekBar
+            android:id="@+id/years_seekbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="30"
+            android:progress="15" />
+
+        <!-- Expected Return Slider -->
+        <TextView
+            android:textColor="@color/colorTextPrimary"
+
+            android:id="@+id/return_text"
+            android:layout_marginTop="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Expected Return Rate: 12%" />
+
+        <SeekBar
+            android:id="@+id/return_seekbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="22"
+            android:progress="4" />
+
+        <!-- Step-up SIP Toggle -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textColor="@color/colorTextPrimary"
+                android:layout_height="wrap_content"
+                android:text="Enable Step-Up SIP" />
+
+            <Switch
+                android:id="@+id/step_up_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <!-- Step-Up Percentage View -->
+        <LinearLayout
+            android:id="@+id/step_up_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Step-Up Increase (% per year)" />
+
+            <EditText
+                android:id="@+id/step_up_percentage_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter percentage"
+                android:inputType="number" />
+        </LinearLayout>
+
+        <!-- Calculate Button -->
+        <Button
+            android:id="@+id/calculate_button"
+            android:layout_gravity="center"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Calculate"
+
+            android:layout_marginTop="24dp" />
+
+        <!-- Result Section -->
+        <TextView
+            android:id="@+id/result_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_marginTop="24dp" />
+
+        <!-- Pie Chart Placeholder -->
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pie_chart"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="16dp"
+            android:visibility="gone" />
+    </LinearLayout>
+</ScrollView>
