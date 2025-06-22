@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/loginLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorSurface"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="24dp"
+    tools:context=".LoginSignupActivity">
+
+    <!-- Fintech Illustration -->
+    <ImageView
+        android:id="@+id/ivSticker"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:src="@drawable/applogo"
+        android:contentDescription="Fintech Illustration"
+        android:layout_marginBottom="24dp" />
+
+    <!-- Welcome Text -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome to Wealthwise"
+        android:textSize="24sp"
+        android:textColor="@color/colorTextPrimary"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/tvSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Track, Save and Grow your Money"
+        android:textSize="16sp"
+        android:textColor="@color/colorTextPrimary"
+        android:layout_marginBottom="32dp" />
+
+    <!-- Google Sign In Button -->
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/google_sign_in_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorTextSecondary"
+        android:backgroundTint="@color/colorTextPrimary"
+        android:layout_marginBottom="12dp" />
+
+    <!-- Or separator -->
+
+    <!-- Custom Gradient Button -->
+
+</LinearLayout>

@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
@@ -50,7 +51,8 @@ class MainActivity : AppCompatActivity() {
         highlightSelectedTab(portfolioTab, 0)
         headingtitle.text = tabnames[0]
         setmainframe(PortfolioFragmain())
-
+        var fbid = intent.getStringExtra("uid");
+        Toast.makeText(this, "${fbid}", Toast.LENGTH_SHORT).show()
         setupKeyboardListener()
 
         // Click Listeners matching new order
