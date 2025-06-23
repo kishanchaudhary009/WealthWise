@@ -5,15 +5,23 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
-import com.google.android.gms.common.SignInButton
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody.Companion.toRequestBody
 
 class LoginSignupActivity : AppCompatActivity() {
 
@@ -32,7 +40,7 @@ class LoginSignupActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
-        // Step 1: If already logged in, go to MainActivity
+        // Step 1: Already logged in? Go to MainActivity
         val currentUser = auth.currentUser
         if (currentUser != null) {
             launchMainActivity(currentUser)
@@ -71,7 +79,19 @@ class LoginSignupActivity : AppCompatActivity() {
                     if (firebaseTask.isSuccessful) {
                         val user = auth.currentUser
                         if (user != null) {
-                            launchMainActivity(user)
+                            // ✅ Launch coroutine to wait for saving user
+
+                            lifecycleScope.launch {
+                                val statusCode = savenewusertodatabase(user.uid)
+
+                                if (statusCode == 200 || statusCode == 201) {
+                                    launchMainActivity(user)
+                                } else {
+                                    Toast.makeText(this@LoginSignupActivity, "Server error. Please try again.", Toast.LENGTH_SHORT).show()
+                                    googleSignInClient.signOut() // Optional: Force sign out so user can retry
+                                }
+                            }
+
                         }
                     } else {
                         Toast.makeText(this, "Firebase authentication failed.", Toast.LENGTH_SHORT).show()
@@ -84,11 +104,40 @@ class LoginSignupActivity : AppCompatActivity() {
         }
     }
 
-    // Step 5: Launch MainActivity with UID
+    // Step 5: Launch MainActivity
     private fun launchMainActivity(user: FirebaseUser) {
         val intent = Intent(this, MainActivity::class.java)
         intent.putExtra("uid", user.uid)
         startActivity(intent)
         finish()
     }
+
+    // ✅ Step 6: Save User to Backend using OkHttp (waits using suspend)
+    private suspend fun savenewusertodatabase(id: String): Int = withContext(Dispatchers.IO) {
+        val okHttpClient = OkHttpClient()
+        val url = "https://fintechappbackend.onrender.com/savenewuser"
+
+        val jsonRawBody = """
+        {
+          "id": "$id"
+        }
+    """.trimIndent()
+
+        val mediaType = "application/json; charset=utf-8".toMediaTypeOrNull()
+        val requestBody = jsonRawBody.toRequestBody(mediaType)
+
+        val request = Request.Builder()
+            .url(url)
+            .post(requestBody)
+            .build()
+
+        try {
+            val response = okHttpClient.newCall(request).execute()
+            response.code // ✅ Only returning status code (200, 404, 500, etc.)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            -1 // ✅ Return -1 in case of network error or crash
+        }
+    }
+
 }

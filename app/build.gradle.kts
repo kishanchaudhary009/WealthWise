@@ -54,5 +54,8 @@ dependencies {
     implementation("com.google.android.gms:play-services-auth:19.2.0")
     implementation(platform("com.google.firebase:firebase-bom:32.7.3"))
     implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
+    implementation("com.google.code.gson:gson:2.10.1")
 
 }

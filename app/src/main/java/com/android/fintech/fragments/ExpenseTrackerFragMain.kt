@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.fintech.R
+import com.android.fintech.models.Expense
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
@@ -16,7 +17,6 @@ import com.github.mikephil.charting.utils.ColorTemplate
 
 class ExpenseTrackerFragMain : Fragment() {
 
-    data class Expense(val category: String, val amount: Float, val date: String)
 
     private lateinit var pieChart: PieChart
     private lateinit var recyclerView: RecyclerView

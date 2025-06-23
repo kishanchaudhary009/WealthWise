@@ -11,6 +11,7 @@ import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.fintech.MainActivity
 import com.android.fintech.R
 import com.android.fintech.models.Stock
 import com.bumptech.glide.Glide
@@ -25,7 +26,7 @@ class PortfolioFragmain : Fragment() {
 
 
     // Temporary Adapter
-    class StockAdapter(private val stockList: List<Stock>) :
+    class StockAdapter(private val stockList: Array<Stock>) :
         RecyclerView.Adapter<StockAdapter.StockViewHolder>() {
 
         class StockViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -67,18 +68,11 @@ class PortfolioFragmain : Fragment() {
         pieChart = view.findViewById(R.id.pieChart)
         displaypiechart(1000,2500)
         // Dummy stock list
-        val dummyStocks = listOf(
-            Stock("Apple Inc.", "AAPL", 150.0, 180.0, 15, "https://logo.clearbit.com/apple.com"),
-            Stock("Google LLC", "GOOGL", 2700.0, 2900.0, 6, "https://logo.clearbit.com/google.com"),
-            Stock("Microsoft Corp.", "MSFT", 280.0, 320.0, 8, "https://logo.clearbit.com/microsoft.com"),
-            Stock("Tata Consultancy Services", "TCS.NS", 3200.0, 3400.0, 12, "https://logo.clearbit.com/tcs.com"),
-            Stock("Infosys Ltd.", "INFY.NS", 1450.0, 1500.0, 10, "https://logo.clearbit.com/infosys.com"),
-
-        )
+        val dummyStocks = (requireActivity() as MainActivity).curruser?.portfolio
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerStocks)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.adapter = StockAdapter(dummyStocks)
+        recyclerView.adapter = dummyStocks?.let { StockAdapter(it) }
 
         return view
     }
